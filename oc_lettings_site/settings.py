@@ -21,7 +21,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env.bool("DEBUG", False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
-print(ALLOWED_HOSTS)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -119,7 +119,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 sentry_sdk.init(
-    dsn=env("DNS"),
+    dsn=env("DSN"),
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
