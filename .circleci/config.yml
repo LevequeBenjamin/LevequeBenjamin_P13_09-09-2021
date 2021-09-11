@@ -1,40 +1,48 @@
 version: 2.1
 
-jobs:
-  build-and-test:
-    docker:
+# Define the jobs we want to run for this project
+jobs: # we now have TWO jobs, so that a workflow can coordinate them!
+  build-and-test: # job name
+    docker: # it uses the docker executor
       - image: circleci/python:3.9
+    # Steps are a list of commands to run inside the docker container above.
     steps:
-      - checkout
+      - checkout # this pulls code down from GitHub
       - run:
-         name: install dependencies and environement
-         command: |
-           python3 -m venv venv
-           . venv/bin/activate
-           pip install -r requirements.txt
+          name: install dependencies and environment
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
       - run:
-         name: Test with pytest
-         command: |
-           . venv/bin/activate
-           pytest
-  deploy-dev:
+          name: Test with pytest
+          command: |
+            . venv/bin/activate
+            pytest
+  deploy-dev: # job name
     machine: true
     steps:
       - checkout
       - run:
           name: Build and push Docker image to Heroku
+          # 1. Install Heroku CLI on the build machine
+          # 2. Login to Heroku with HEROKU_API_KEY, avoiding to login
+          # 3. Build and push docker image to heroku registry
+          # 4. Publish to the website
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-6 web
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-6 web
+
+# Orchestrate our job run sequence
 workflows:
-  main:
+  main: # name of your workflow
     jobs:
       - build-and-test
       - deploy-dev:
           requires:
-            - build-and-test
+            - build-and-test # wait for build-and-test job to complete successfully before starting
           filters:
             branches:
-              only: master
+              only: master # on the branch master only
