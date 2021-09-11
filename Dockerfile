@@ -1,0 +1,24 @@
+# pull the official base image
+FROM python:3.8
+
+# set work directory
+WORKDIR /app
+
+# set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    DEBUG=False \
+    PORT=8000
+
+ADD . /app
+
+
+# install dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# copy project
+COPY . /app
+
+EXPOSE 8000
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
