@@ -18,11 +18,11 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 #### Cloner le repository
 
 - `cd /path/to/put/project/in`
-- `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
+- `git clone https://github.com/LevequeBenjamin/LevequeBenjamin_P13_09-09-2021.git`
 
 #### Créer l'environnement virtuel
 
-- `cd /path/to/Python-OC-Lettings-FR`
+- `cd /path/to/LevequeBenjamin_P13_09-09-2021`
 - `python -m venv venv`
 - `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
 - Activer l'environnement `source venv/bin/activate`
@@ -34,7 +34,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 
 #### Exécuter le site
 
-- `cd /path/to/Python-OC-Lettings-FR`
+- `cd /path/to/LevequeBenjamin_P13_09-09-2021`
 - `source venv/bin/activate`
 - `pip install --requirement requirements.txt`
 - `python manage.py runserver`
@@ -43,19 +43,19 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 
 #### Linting
 
-- `cd /path/to/Python-OC-Lettings-FR`
+- `cd /path/to/LevequeBenjamin_P13_09-09-2021`
 - `source venv/bin/activate`
 - `flake8`
 
 #### Tests unitaires
 
-- `cd /path/to/Python-OC-Lettings-FR`
+- `cd /path/to/LevequeBenjamin_P13_09-09-2021`
 - `source venv/bin/activate`
 - `pytest`
 
 #### Base de données
 
-- `cd /path/to/Python-OC-Lettings-FR`
+- `cd /path/to/LevequeBenjamin_P13_09-09-2021`
 - Ouvrir une session shell `sqlite3`
 - Se connecter à la base de données `.open oc-lettings-site.sqlite3`
 - Afficher les tables dans la base de données `.tables`
@@ -75,3 +75,21 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+#### Déploiement
+
+Le déploiement du site sur Heroku demande de remplir plusieurs critères:
+
+- Avoir un compte Dockerhub
+- Avoir un compte Heroku
+- Avoir un compte Sentry
+- Effectuer un pipeline sur CircleCI :
+  - S'inscrire à CircleCI
+  - Etre membre autorisé du pipeline sur projet pour ce repo
+  - Configurer les variables d'environnement suivantes :
+    - DOCKERHUB_USERNAME : nom du compte dockerhub
+    - DOCKERHUB_PASSWORD : mot de passe dockerhub
+    - HEROKU_TOKEN : Clé d'API du compte Heroku (trouvable à /account)
+    - DNS_SENTRY : Pour avoir une surveillances des données depuis Sentry
+    - SECRET_KEY : la clé d'encodage de Django, afin de l'isoler du code
+- Push sur la branche main pour déploiement
