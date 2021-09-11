@@ -21,4 +21,3 @@ def test_profile_view(client):
     response = client.get(url)
     assert b'Sangoku' in response.content
     assert response.status_code == 200
-
