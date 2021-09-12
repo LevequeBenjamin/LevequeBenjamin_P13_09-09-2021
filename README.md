@@ -87,9 +87,9 @@ Le déploiement du site sur Heroku demande de remplir plusieurs critères:
   - S'inscrire à CircleCI
   - Etre membre autorisé du pipeline sur projet pour ce repo
   - Configurer les variables d'environnement suivantes :
-    - DOCKERHUB_USERNAME : nom du compte dockerhub
-    - DOCKERHUB_PASSWORD : mot de passe dockerhub
-    - HEROKU_TOKEN : Clé d'API du compte Heroku (trouvable à /account)
-    - DNS_SENTRY : Pour avoir une surveillances des données depuis Sentry
-    - SECRET_KEY : la clé d'encodage de Django, afin de l'isoler du code
-- Push sur la branche main pour déploiement
+    - HEROKU_TOKEN : Clé d'API du compte Heroku
+    - DSN : Pour avoir une surveillance des données depuis Sentry
+    - SECRET_KEY : la clé d'encodage de Django
+    - ALLOWED_HOSTS : 'localhost,0.0.0.0,127.0.0.1,oc-lettings-6.herokuapp.com'
+    - DEBUG : False
+- Push sur la branche master pour déploiement
